@@ -4,6 +4,7 @@ clc
 %% set up pathes
 currentpath = cd;
 newpath = 'H:\CT data\042414';
+%making new changes on this part, it doesn't exist yet
 
 % change to new path
 cd(newpath);
