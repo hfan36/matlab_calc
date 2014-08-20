@@ -27,10 +27,20 @@ clc
 % figure; imagesc(reshape(dat, 1024, 1024)); colormap gray; axis equal;
 
 %% reading the reconstructed images
-recon_data = readBinary('H:\CT data\051314\cleaned_data\recon_C1024_2_clean_phantom_60kV_400uA_10sec_1.bin', 64*64*20, 'float');
-recon_data = reshape(recon_data, 64, 64, 20);
-figure; imagesc(recon_data(:,:,10)'); colormap gray; axis equal; colorbar;
+xdim = 256;
+ydim = 256;
+zdim = 20;
+slice = 10;
+recon_data = readBinary('H:\CT data\051314\cleaned_data\recon_phantom_9.bin', xdim*ydim*zdim, 'float');
+recon_data = reshape(recon_data, xdim, ydim, zdim);
+figure; imagesc(recon_data(:,:,slice)'); colormap gray; axis equal; colorbar;
 
+%% 
+
+
+% test = readBinary('H:\Visual Studio 2010\CTSolution\Siddon\data\recon_trimmed_data1024_9.bin', 128*128*128, 'float');
+% test = reshape(test, 128, 128, 128);
+% figure; imagesc(test(:,:,64)); colormap gray; axis equal; colorbar;
 
 %% just looking at the simulation images
 % sim_image_data = readBinary('H:\CT data\051314\simulation\fp_phantom_voxelvolume_10.bin', 1024*1024, 'float');
