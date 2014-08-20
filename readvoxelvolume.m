@@ -5,8 +5,7 @@ clc
 % phantom1_1.raw
 currentpath = cd;
 cd('H:\CT data\051314\simulation\');
-% 
-%can I change this? this should be a new line on the branch of today
+
 
 % S = 128;
 % dat = readBinary('phantom1_4.raw', S^3, 'int8');
