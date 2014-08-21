@@ -31,9 +31,9 @@ xdim = 512;
 ydim = 512;
 zdim = 10;
 slice = 4;
-recon_data = readBinary('H:\CT data\051314\cleaned_data\recon_phantom_VOX015_512_s10_7.bin', xdim*ydim*zdim, 'float');
+recon_data = readBinary('H:\CT data\051314\cleaned_data\recon_phantom_VOX015_512_s10_9.bin', xdim*ydim*zdim, 'float');
 recon_data = reshape(recon_data, xdim, ydim, zdim);
-figure; imagesc(recon_data(:,:,slice)', [0.001 0.02]); colormap gray; axis equal; colorbar;
+figure; imagesc(recon_data(:,:,slice)'); colormap gray; axis equal; colorbar;
 
 %% 
 % test = readBinary('H:\Visual Studio 2010\CTSolution\Siddon\data\recon_trimmed_data1024_9.bin', 128*128*128, 'float');
