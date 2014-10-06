@@ -13,8 +13,9 @@ dat = reshape(dat(2:end), 2160, 2560);
 dat_small = dat(1091:1684, 983:1550);
 
 % display of this section 
-% figure; imagesc(dat); colormap gray; axis equal; colorbar;
-% title('Original image of the ruler');
+figure(88); imagesc(dat); colormap gray; axis equal; colorbar;
+
+title('Original image of the ruler');
 % 
 % figure; imagesc(dat_small); colormap gray; axis equal; colorbar;
 % title('Clipped image of the ruler');
@@ -64,12 +65,48 @@ load('angular_deviation.mat');
 % hold off;
 % title('cross section of the 2 black lines');
 
-figure;
+figure(1);
 subplot(1,2,1);
 plot(fit_line_left, pixel_index, xmin_left);
 subplot(1,2,2);
 plot(fit_line_right, pixel_index, xmin_right);
 title('fitted data');
+
+figure(2);
+set(gcf, 'Position', [100 100 340 250]);
+plot(fit_line_left, pixel_index, xmin_left);
+set(gca, 'FontSize', 8, 'xlim', [0 460], 'ylim', [6.5 10.5]);
+xlabel('shift in x direction (mm)');
+ylabel('shift in y direction (mm)');
+legend('extracted peak locations', 'Fitted line');
+set(gcf, 'Color', 'white');
+export_fig(gcf, ...      % figure handle
+    'calc_opticalmag',... % name of output file without extension
+    '-painters', ...      % renderer
+    '-jpg', '-eps', ...           % file format
+    '-r100' );             % resolution in dpi
+
+% figure(1);
+% set(gcf, 'Position', [100 100 450 350]);
+% plot(Dwb/D_50, P_wb(1,:), '-k'); hold on;
+% plot(Dwb/D_50, P_wb(2,:), '--k');
+% plot(Dwb/D_50, P_wb(3,:), ':k'); hold off;
+% set(gca, 'FontSize', 12, 'ylim', [0 1], 'xlim', [0 2], 'XTick', 0:0.4:2, 'XMinorTick', 'on', 'PlotBoxAspectRatio', [1.5 1.2 1]);
+% ylabel('Probability of a tissue-reaction effect, P'); 
+% xlabel('Dose, D/D_{50}');
+% legend('V = 2', 'V = 5', 'V = 10', 'Location', 'NorthWest');
+% text(0.04, 0.02, 'T');
+% text(0.2, 0.02, 'T');
+% text(0.3, 0.02, 'T');
+% name1 = 'Weibull-P_vs_D';
+% set(gcf, 'Color', 'white'); % white bckgr
+% export_fig(gcf, ...      % figure handle
+%     name1,... % name of output file without extension
+%     '-painters', ...      % renderer
+%     '-jpg', '-eps', ...           % file format
+%     '-r100' );             % resolution in dpi
+% % saveas(gcf, strcat(name1, '.fig'));
+
 %% getting the period of the ruler
 % load('angular_deviation.mat');
 rulerimage_mm = dat_small(:, 460:487);

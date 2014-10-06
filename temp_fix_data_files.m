@@ -19,7 +19,7 @@ clc
 %    flood_corrected (flood_corrected < 0.08) = 0;
 %    flood_corrected = reshape(flood_corrected, 2560, 2160);
 %    dat = flood_corrected(769:769+1023, 569:569+1023)';
-%    
+   
 %    save_file_name = strcat(image_data_folder, 'C1024_2_', image_data_filename);
 %    writeBinary(dat(:), save_file_name, 'float');
 % end
@@ -29,16 +29,20 @@ clc
 %% reading the reconstructed images
 xdim = 512;
 ydim = 512;
-zdim = 10;
-slice = 4;
-recon_data = readBinary('H:\CT data\051314\cleaned_data\recon_phantom_VOX015_512_s10_9.bin', xdim*ydim*zdim, 'float');
+zdim = 20;
+slice = 11;
+recon_data = readBinary('H:\CT data\051314\cleaned_data\recon_phantom_VOX015_512_s20_dx0_15.bin', xdim*ydim*zdim, 'float');
 recon_data = reshape(recon_data, xdim, ydim, zdim);
 figure; imagesc(recon_data(:,:,slice)'); colormap gray; axis equal; colorbar;
 
+% recon_data = readBinary('H:\CT data\051314\cleaned_data\recon_phantom_VOX050_128_s20_dx0dz0_5.bin', 128*128*20, 'float');
+% recon_data = reshape(recon_data, 128, 128, 20);
+% figure; imagesc(recon_data(:,:,slice)'); colormap gray; axis equal; colorbar;
+
 %% 
-% test = readBinary('H:\Visual Studio 2010\CTSolution\Siddon\data\recon_trimmed_data1024_9.bin', 128*128*128, 'float');
-% test = reshape(test, 128, 128, 128);
-% figure; imagesc(test(:,:,3)); colormap gray; axis equal; colorbar;
+% test = readBinary('H:\CT data\051314\cleaned_data\clean_phantom_60kV_400uA_10sec_0.ct', 2160*2560, 'float');
+% test = reshape(test, 2560, 2160);
+% figure; imagesc(test); colormap gray; axis equal; colorbar;
 
 %% just looking at the simulation images
 % sim_image_data = readBinary('H:\CT data\051314\simulation\fp_phantom_voxelvolume_10.bin', 1024*1024, 'float');
