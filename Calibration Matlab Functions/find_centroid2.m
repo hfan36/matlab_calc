@@ -45,7 +45,9 @@ params = struct('NpixelsWidth', NpixelsWidth, ...
 % 
 folder_root = 'H:\Calibration\112613\';
 % 
-filename = strcat(folder_root, '100kV_2sec_200uA_P1_', num2str(35), '.ct');
+
+for t = 1:180
+filename = strcat(folder_root, '100kV_2sec_200uA_P1_', num2str(t-1), '.ct');
 
 % function [u, v, img] = find_centroid2(params, filename, noisefilter, gaussianfilter2d)
 
@@ -96,45 +98,48 @@ for index = 1:length(xcoord_noedge)
 end
 figure(5); imagesc(img_filter_gnoise'); colormap gray; colorbar;
 
-% save('temp.mat', 'img_filter_gnoise', 'xcoor_filtered_gnoise', 'ycoor_filtered_gnoise', 'clip_dat');
+outputname = strcat('temp_', num2str(t-1), '.mat');
+save(outputname, 'img_filter_gnoise', 'xcoor_filtered_gnoise', 'ycoor_filtered_gnoise', 'clip_dat');
+end
 %% centroid x histogram
-c = zeros(size(xcoor_filtered_gnoise));
-count = 1;
-n = 1;
-
-x = xcoor_filtered_gnoise;
-y = ycoor_filtered_gnoise;
-figure; plot(x, y, '.');
-
-index = 0;
-% while count < 4
-
-dis = sqrt( (x(1)-x).^2 + (y(1) - y).^2 ); 
-dis_n = find(dis <= 100);
-
-
-    for n = 1:1 %length(dis_n)+20
-        d = sqrt( (x(n) - x(dis_n)).^2 + (y(n) - y(dis_n)).^2);
-        mean_d = mean(d);
-        std_d = std(d);        
-        a = find(d <=(mean_d + 3*std_d) | (d >= mean_d - 3*std_d) );
-
-        na = find (a ~= dis_n);
-        if size(na) ~= 0
-            c(na) = 0;
-        else
-            c(n) = count;
-        end 
-    end
-    index = index + max(dis_n);
-    x = xcoor_filtered_gnoise(index:end);
-    y = ycoor_filtered_gnoise(index:end);
-    figure; plot(x, y, '.');
-    count = count + 1;
+% c = zeros(size(xcoor_filtered_gnoise));
+% count = 1;
+% n = 1;
+% 
+% x = xcoor_filtered_gnoise;
+% y = ycoor_filtered_gnoise;
+% figure; plot(x, y, '.');
+% 
+% index = 0;
+% % while count < 4
+% 
+% dis = sqrt( (x(1)-x).^2 + (y(1) - y).^2 ); 
+% dis_n = find(dis <= 100);
+% 
+% 
+%     for n = 1:1 %length(dis_n)+20
+%         d = sqrt( (x(n) - x(dis_n)).^2 + (y(n) - y(dis_n)).^2);
+%         mean_d = mean(d);
+%         std_d = std(d);        
+%         a = find(d <=(mean_d + 3*std_d) | (d >= mean_d - 3*std_d) );
+% 
+%         na = find (a ~= dis_n);
+%         if size(na) ~= 0
+%             c(na) = 0;
+%         else
+%             c(n) = count;
+%         end 
+%     end
+%     index = index + max(dis_n);
+%     x = xcoor_filtered_gnoise(index:end);
+%     y = ycoor_filtered_gnoise(index:end);
+%     figure; plot(x, y, '.');
+%     count = count + 1;
     
+%%
 
 
-
+%%
 % dis_m = find(dis > 150);
 % x = xcoor_filtered_gnoise(dis_m);
 % y = ycoor_filtered_gnoise(dis_m);

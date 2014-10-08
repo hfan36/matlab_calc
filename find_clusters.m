@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-load('temp.mat');
+load('temp_34.mat');
 figure(1); plot(xcoor_filtered_gnoise, ycoor_filtered_gnoise, '.');
 x = xcoor_filtered_gnoise;
 y = ycoor_filtered_gnoise;
@@ -88,13 +88,15 @@ clusterN = 1;
 index_limit = 0;
 % figure;
 dd = 40;
-cluster_index_array = 1:9;
+cluster_index_array = 1:10;
 cluster_temp = 10;
+emptyTF = 0;
 
-while cluster_index_array(1) <= 8
+% while emptyTF ~= 1 && cluster_index_array(1) <= 8
+    
     l = length(index_array); %preset so it does not loop over and over again
     
-    while n <= l
+    while n <= l && emptyTF ~= 1
         d = sqrt( (x(index_array(1)) - x_com)^2 + (y(index_array(1))-y_com)^2 );
 
         if (d <= radius)
@@ -122,8 +124,8 @@ while cluster_index_array(1) <= 8
             index_array(1) = [];
         end
         n = n+1;  
-        
-       
+        index_array(1) = [];
+        emptyTF = isempty(index_array);
     end
     
     %this part is to double check everything in this cluster is valid
@@ -150,7 +152,9 @@ while cluster_index_array(1) <= 8
     n_points = 1;
 
     n = 1;
-    figure;
-    plot(x(index_array), y(index_array), '.');
-    
-end
+%     figure;
+%     plot(x(index_array), y(index_array), '.');
+    disp(emptyTF);
+% % end
+% figure;
+% plot(x(index_array), y(index_array), '.');
