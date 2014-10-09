@@ -46,7 +46,7 @@ params = struct('NpixelsWidth', NpixelsWidth, ...
 folder_root = 'H:\Calibration\112613\';
 % 
 
-for t = 1:180
+for t = 1:1%180
 filename = strcat(folder_root, '100kV_2sec_200uA_P1_', num2str(t-1), '.ct');
 
 % function [u, v, img] = find_centroid2(params, filename, noisefilter, gaussianfilter2d)
@@ -70,7 +70,7 @@ dat_noedge(params.boundary_width:end-params.boundary_width, params.boundary_widt
 n = find(dat_noedge(:)<= params.threshold_range(2) & dat_noedge(:)>= params.threshold_range(1));
 img_simple_threshold = zeros(size(clip_dat));
 img_simple_threshold(n) = clip_dat(n);
-% figure(4); imagesc(img_simple_threshold'); colormap gray; colorbar; axis equal;
+figure(4); imagesc(img_simple_threshold'); colormap gray; colorbar; axis equal;
 clear n;
 [ycoord_noedge, xcoord_noedge] = find(dat_noedge <= params.threshold_range(2) & dat_noedge >= params.threshold_range(1));
 %% find x and y coordinates of filter1
@@ -96,10 +96,10 @@ for index = 1:length(xcoord_noedge)
     end       
     
 end
-figure(5); imagesc(img_filter_gnoise'); colormap gray; colorbar;
+figure(5); imagesc(img_filter_gnoise'); colormap gray; colorbar; axis equal;
 
 outputname = strcat('temp_', num2str(t-1), '.mat');
-save(outputname, 'img_filter_gnoise', 'xcoor_filtered_gnoise', 'ycoor_filtered_gnoise', 'clip_dat');
+% save(outputname, 'img_filter_gnoise', 'xcoor_filtered_gnoise', 'ycoor_filtered_gnoise', 'clip_dat');
 end
 %% centroid x histogram
 % c = zeros(size(xcoor_filtered_gnoise));
