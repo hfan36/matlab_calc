@@ -46,7 +46,7 @@ params = struct('NpixelsWidth', NpixelsWidth, ...
 folder_root = 'H:\Calibration\112613\';
 % 
 
-for t = 1:1%180
+for t = 1:180
 filename = strcat(folder_root, '100kV_2sec_200uA_P1_', num2str(t-1), '.ct');
 
 % function [u, v, img] = find_centroid2(params, filename, noisefilter, gaussianfilter2d)
@@ -58,14 +58,14 @@ dat = reshape(dat(2:end), params.NpixelsWidth, params.NpixelsHeight);
 
 %% clip the original image
 clip_dat = dat(params.clip_lateral_edges:end-params.clip_lateral_edges,params.clip_height_top:end-params.clip_height_bottom);
-% figure(2); imagesc(clip_dat', [0 500]); colormap gray; colorbar; axis equal;
+figure(2); imagesc(clip_dat', [0 500]); colormap gray; colorbar; axis equal;
 
 clear dat;
 
 dat_noedge = zeros(size(clip_dat));
 dat_noedge(params.boundary_width:end-params.boundary_width, params.boundary_width:end-params.boundary_width) = ...
            clip_dat(params.boundary_width:end-params.boundary_width, params.boundary_width:end-params.boundary_width); 
-% figure(3); imagesc(dat_noedge', [0 500]); colormap gray; axis equal;       
+figure(3); imagesc(dat_noedge', [0 500]); colormap gray; axis equal;       
 %% simple threshold 
 n = find(dat_noedge(:)<= params.threshold_range(2) & dat_noedge(:)>= params.threshold_range(1));
 img_simple_threshold = zeros(size(clip_dat));
@@ -99,7 +99,7 @@ end
 figure(5); imagesc(img_filter_gnoise'); colormap gray; colorbar; axis equal;
 
 outputname = strcat('temp_', num2str(t-1), '.mat');
-% save(outputname, 'img_filter_gnoise', 'xcoor_filtered_gnoise', 'ycoor_filtered_gnoise', 'clip_dat');
+save(outputname, 'dat_noedge', 'params', 'img_simple_threshold', 'xcoord_noedge', 'ycoord_noedge', 'img_filter_gnoise', 'xcoor_filtered_gnoise', 'ycoor_filtered_gnoise', 'clip_dat');
 end
 %% centroid x histogram
 % c = zeros(size(xcoor_filtered_gnoise));
