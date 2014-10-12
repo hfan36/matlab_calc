@@ -9,7 +9,8 @@ clc
 %this is the raw data from experiment after centroid has been extracted
 % folder_root = 'H:\Calibration\112613\';
 % load(strcat(folder_root, 'uvdata.mat'));
-load('H:\CT data\042414\calibration_042414.mat');
+% load('H:\CT data\042414\calibration_042414.mat');
+load('C:\Users\Ryan-Helen\Documents\CT data\matlab_calc\calibration_042414.mat');
 u = u(:,:,2);
 v = -v(:,:,2)+2560;
 
