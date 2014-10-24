@@ -80,5 +80,5 @@ end
         
 
 figure(2000);
-plot(u0', v0', 'b');   hold on;
-plot(u_fit', v_fit', 'r');
+plot(u0', v0', '.b');   hold on;
+plot(u_fit', v_fit', '.r');

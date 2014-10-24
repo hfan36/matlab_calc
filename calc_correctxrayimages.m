@@ -16,7 +16,7 @@ dat = readBinary(filename, 2160*2560+1, 'uint16');
 dat = dat(2:end);
 dat = reshape(dat, 2560, 2160);
 
-% figure; imagesc(dat, [0 600]); colormap gray; axis equal; colorbar;
+figure; imagesc(dat, [0 400]); colormap gray; axis equal; colorbar;
 %%
 
 NpixelsWidth = 2160; 

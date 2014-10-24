@@ -9,8 +9,8 @@ clc
 %this is the raw data from experiment after centroid has been extracted
 % folder_root = 'H:\Calibration\112613\';
 % load(strcat(folder_root, 'uvdata.mat'));
-% load('H:\CT data\042414\calibration_042414.mat');
-load('C:\Users\Ryan-Helen\Documents\CT data\matlab_calc\calibration_042414.mat');
+load('H:\CT data\042414\calibration_042414.mat');
+% load('C:\Users\Ryan-Helen\Documents\CT data\matlab_calc\calibration_042414.mat');
 % u = u(:,:,2);
 % v = -v(:,:,2)+2560;
 
@@ -155,12 +155,12 @@ eta_guessArray = getgridarray(eta0, delta_eta, N_grid);
 Rf_guessArray = getgridarray(Rf0, delta_Rf, N_grid);
 mse_array = zeros(N_loop,1);
 
-fps= 0.5;
-outfile = sprintf('%s','contracting_grid_movie.avi');
+% fps= 0.5;
+% outfile = sprintf('%s','contracting_grid_movie.avi');
 % mov = VideoWriter(outfile, 'Motion JPEG AVI', 'FrameRate',fps,'Quality',10);
 
-nframes = 100;
-mov(1:nframes) = struct('cdata', [], 'colormap', []);
+% nframes = 100;
+% mov(1:nframes) = struct('cdata', [], 'colormap', []);
 
 for loop_index = 1:N_loop
     zi = zi0 + dz_guessArray(1);
@@ -205,41 +205,41 @@ for loop_index = 1:N_loop
     [u_min, v_min] = CalibrationPlot_smekal(result, ri_Rf, theta_guessArray(min_theta_index), ...
         eta_guessArray(min_eta_index), phi_guessArray(min_phi_index), alpha);
     
-%     figure(88)
-%     title('contracting grid result');
-%     subplot(1,2,1);
-%     plot(u0', v0', '.b'); hold on
-%     plot(u_min', v_min', '.r'); hold off;
-%     subplot(1,2,2);
-%     plot(loop_index, mse_array(loop_index), '.'); hold on;
+    figure(88)
+    title('contracting grid result');
+    subplot(1,2,1);
+    plot(u0', v0', '.b'); hold on
+    plot(u_min', v_min', '.r'); hold off;
+    subplot(1,2,2);
+    plot(loop_index, mse_array(loop_index), '.'); hold on;
 
 %------------------------------------------------------------------------------------------------
 % only used for making GIF video
-    figure(88)
-    set(gcf, 'Position', [100 100 1200 600]);
-    subplot(1,2,1);
-    plot(u0', v0', '.b'); hold on;
-    plot(u_min', v_min', '.r'); hold off;
-    xlim([-90 90]); ylim([-90 90]);
-    xlabel('mm'); ylabel('mm');
+%     figure(88)
+%     set(gcf, 'Position', [100 100 1200 600]);
+%     subplot(1,2,1);
+%     plot(u0', v0', '.b'); hold on;
+%     plot(u_min', v_min', '.r'); hold off;
+%     xlim([-90 90]); ylim([-90 90]);
+%     xlabel('mm'); ylabel('mm');
+%     
+%     subplot(1,2,2);
+%     plot(loop_index, mse_array(loop_index), '.'); hold on;
+%     xlim([0 N_loop]);
+%     xlabel('number of iterations');
+%     ylabel('sum of squared errors');
     
-    subplot(1,2,2);
-    plot(loop_index, mse_array(loop_index), '.'); hold on;
-    xlim([0 N_loop]);
-    xlabel('number of iterations');
-    ylabel('sum of squared errors');
     
-    
-    f = getframe(88);
-    im = frame2im(f);
-    [A, map] = rgb2ind(im, 256);
-    if loop_index == 1;
-        imwrite(A, map, 'contracting_grid.gif', 'gif', 'LoopCount', 1, 'DelayTime', 2);
-    else
-        imwrite(A, map, 'contracting_grid.gif', 'gif', 'WriteMode', 'append', 'DelayTime', 0.2);
-    end
-    
-    mov(loop_index) = f;
+%     f = getframe(88);
+%     im = frame2im(f);
+%     [A, map] = rgb2ind(im, 256);
+%     if loop_index == 1;
+%         imwrite(A, map, 'contracting_grid.gif', 'gif', 'LoopCount', 1, 'DelayTime', 2);
+%     else
+%         imwrite(A, map, 'contracting_grid.gif', 'gif', 'WriteMode', 'append', 'DelayTime', 0.2);
+%     end
+%     
+%     mov(loop_index) = f;
 %------------------------------------------------------------------------------------------------    
     
     min_dz = dz_guessArray(min_dz_index);
@@ -257,11 +257,36 @@ for loop_index = 1:N_loop
         min_dz, min_phi*180/pi, min_theta*180/pi, min_eta*180/pi, min_Rf, mse_array(loop_index));
     
 end
-mov = close(mov);
-movie2avi(mov, 'test.avi', 'compression', 'Cinepak', 'fps', 3, 'quality', 10);
+% mov = close(mov);
+% movie2avi(mov, 'test.avi', 'compression', 'Cinepak', 'fps', 3, 'quality', 10);
 
 figure;
 plot(u0', v0', '.b'); hold on;
 plot(u_min', v_min', '.r'); hold off;
 
+save('calibration_values_dissertation.mat', 'min_Rf', 'min_eta', 'min_theta', 'min_phi', 'min_dz', 'u0', 'v0', 'u_min', 'v_min');
 % % % save(strcat(folder_root, 'calibration_values.mat'), 'min_Rf', 'min_eta', 'min_theta', 'min_phi', 'min_dz', 'u0', 'v0');
+
+%% display pretty figure for dissertation
+clear all
+close all
+clc
+
+load('calibration_values_dissertation.mat');
+
+figure;
+plot(u0(:), v0(:), '.b'); 
+hold on;
+plot(u_min(:), v_min(:), '.r'); hold off; axis square;
+set(gca, 'FontSize', 12, 'ylim', [-80 80], 'xlim', [-90 90], 'XTick', -90:20:90, 'XMinorTick', 'off', 'PlotBoxAspectRatio', [1.5 1.5 1]);
+set(gcf, 'Color', 'white', 'Units', 'inches', 'Position', [4 4 5, 5]); % white bckgr
+xlabel('phosphor screen lateral dimension (mm)'); ylabel('phosphor screen vertical dimension (mm)');
+legend('points from experiment', 'points using calibration parameters', ...
+       'Location', 'northoutside');
+name = 'calibration_plot';
+export_fig(gcf, ...      % figure handle
+    name,... % name of output file without extension
+    '-painters', ...      % renderer
+    '-jpg', '-eps', ...           % file format
+    '-r100' );             % resolution in dpi
+% saveas(gcf, strcat(name, '.fig'));
