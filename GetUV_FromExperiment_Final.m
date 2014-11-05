@@ -5,7 +5,7 @@ clc
 NpixelsWidth = 2560; 
 NpixelsHeight = 2160;
 clip_height_top = 350;
-clip_height_bottom = 80;
+clip_height_bottom = 100;
 clipImageHeight = NpixelsHeight-clip_height_top-clip_height_bottom+1;
 clip_lateral_edges = 250;
 threshold_range = [100 200];
@@ -48,9 +48,10 @@ u = zeros(N_steelballs, 180);
 v = zeros(N_steelballs, 180);
 
 
-for n = 1:1% 180
+for n = 1:1 %180
     filename = strcat(folder_root, '100kV_2sec_200uA_P1_', num2str(n-1), '.ct');
-    [u(:,n), v(:,n), ~] = find_centroid2(params, filename, noise_filter, bearing_filter);
+    [u(:,n), v(:,n), img] = find_centroidfcn(params, filename);
 end
 
-% save(strcat(folder_root, 'uvdata.mat', 'u', 'v', 'params'));
+% save(strcat(folder_root, 'uvdata.mat'), 'u', 'v', 'params');
+% save(strcat(folder_root, 'uvdata_new_extraction.mat'), 'u', 'v', 'params');
