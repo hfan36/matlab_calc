@@ -47,7 +47,6 @@ folder_root = 'H:\Calibration\112613\';
 u = zeros(N_steelballs, 180);
 v = zeros(N_steelballs, 180);
 
-
 for n = 1:1 %180
     filename = strcat(folder_root, '100kV_2sec_200uA_P1_', num2str(n-1), '.ct');
     [u(:,n), v(:,n), img] = find_centroidfcn(params, filename);
