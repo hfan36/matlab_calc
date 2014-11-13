@@ -317,25 +317,25 @@ fclose(fid);
 
 
 %% display pretty figure for dissertation
-% clear all
-% close all
-% clc
-% 
-% load('calibration_values_dissertation.mat');
-% 
-% figure;
-% plot(u0(:), v0(:), '.b'); 
-% hold on;
-% plot(u_min(:), v_min(:), '.r'); hold off; axis square;
-% set(gca, 'FontSize', 12, 'ylim', [-80 80], 'xlim', [-90 90], 'XTick', -90:20:90, 'XMinorTick', 'off', 'PlotBoxAspectRatio', [1.5 1.5 1]);
-% set(gcf, 'Color', 'white', 'Units', 'inches', 'Position', [4 4 5, 5]); % white bckgr
-% xlabel('phosphor screen lateral dimension (mm)'); ylabel('phosphor screen vertical dimension (mm)');
-% legend('points from experiment', 'points using calibration parameters', ...
-%        'Location', 'northoutside');
-% name = 'calibration_plot';
-% export_fig(gcf, ...      % figure handle
-%     name,... % name of output file without extension
-%     '-painters', ...      % renderer
-%     '-jpg', '-eps', ...           % file format
-%     '-r100' );             % resolution in dpi
-% % saveas(gcf, strcat(name, '.fig'));
+clear all
+close all
+clc
+
+load('calibration_values_dissertation.mat');
+
+figure;
+plot(u0(:), v0(:), '.b'); 
+hold on;
+plot(u_min(:), v_min(:), '.r'); hold off; axis square;
+set(gca, 'FontSize', 12, 'ylim', [-80 80], 'xlim', [-90 90], 'XTick', -90:20:90, 'XMinorTick', 'off', 'PlotBoxAspectRatio', [1.5 1.5 1]);
+set(gcf, 'Color', 'white', 'Units', 'inches', 'Position', [4 4 5, 5]); % white bckgr
+xlabel('Phosphor screen lateral dimension (mm)'); ylabel('Phosphor screen vertical dimension (mm)');
+legend('Points from experiment', 'Points using calibration parameters', ...
+       'Location', 'northoutside');
+name = 'calibration_plot';
+export_fig(gcf, ...      % figure handle
+    name,... % name of output file without extension
+    '-painters', ...      % renderer
+    '-jpg', '-eps', ...           % file format
+    '-r100' );             % resolution in dpi
+saveas(gcf, strcat(name, '.fig'));

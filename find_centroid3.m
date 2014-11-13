@@ -46,7 +46,7 @@ params = struct('NpixelsWidth', NpixelsWidth, ...
 folder_root = 'H:\Calibration\112613\';
 
 
-for t = 9
+for t = 1
 filename = strcat(folder_root, '100kV_2sec_200uA_P1_', num2str(t-1), '.ct');
 close all;
 % function [u, v, img] = find_centroid3(params, filename)
@@ -55,7 +55,18 @@ close all;
 dat = readBinary(filename, params.NpixelsHeight*params.NpixelsWidth+1, 'uint16');
 dat = reshape(dat(2:end), params.NpixelsWidth, params.NpixelsHeight);
 figure(1); imagesc(dat', [0 500]); colormap gray; axis equal; 
-
+% for display only
+xlabel('Pixels'); ylabel('Pixels');
+set(gca, 'FontSize', 12, 'xlim', [1 2560], 'ylim', [1 2160]);
+set(gcf, 'Color', 'white', 'Units', 'inches', 'Position', [4 4 5, 5]); % white bckgr
+xlabel('Pixels'); ylabel('Pixels');
+name = 'projection_image';
+export_fig(gcf, ...      % figure handle
+    name,... % name of output file without extension
+    '-painters', ...      % renderer
+    '-jpg', '-eps', ...           % file format
+    '-r100' );             % resolution in dpi
+saveas(gcf, strcat(name, '.fig'));
 %% clip the original image
 clip_dat = zeros(size(dat));
 clip_dat(params.clip_lateral_edges:end-params.clip_lateral_edges,params.clip_height_top:end-params.clip_height_bottom)...
